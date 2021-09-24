@@ -1,2 +1,5 @@
 # Enforce Unix newlines
 * text=auto eol=lf
+
+material linguist-generated=true
+material/** linguist-generated=true
