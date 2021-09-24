@@ -20,19 +20,19 @@
 
 # Project information
 site_name: Material for MkDocs
-site_url: https://squidfunk.github.io/mkdocs-material/
-site_author: Martin Donath
+site_url: https://pxeger.github.io/mkdocs-material/
+site_author: Patrick Reader
 site_description: >-
   Create a branded static site from a set of Markdown files to host the
   documentation of your Open Source or commercial project
 
 # Repository
-repo_name: squidfunk/mkdocs-material
-repo_url: https://github.com/squidfunk/mkdocs-material
+repo_name: pxeger/mkdocs-material
+repo_url: https://github.com/pxeger/mkdocs-material
 edit_uri: ""
 
 # Copyright
-copyright: Copyright &copy; 2016 - 2021 Martin Donath
+copyright: Copyright &copy; 2016 - 2021 Martin Donath; Copyright &copy 2021 Patrick Reader
 
 # Configuration
 theme:

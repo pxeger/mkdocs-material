@@ -1,3 +1,15 @@
+# pxeger/mkdocs-material
+
+The upstream project advertises "techincal documentation that just works". This is entirely accurate: it does
+*just about* work. If you want to do anything remotely custom to it, though, this falls apart completely.
+
+This fork seeks to significantly improve its customisability, while also adding or replacing some of the features which
+are "insiders-only" (most are pretty easy to reimplement).
+
+The original README is below:
+
+---
+
 <p align="center">
   <a href="https://squidfunk.github.io/mkdocs-material/">
     <img src="https://raw.githubusercontent.com/squidfunk/mkdocs-material/master/.github/assets/logo.svg" width="320" alt="Material for MkDocs">
