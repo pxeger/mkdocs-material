@@ -23,64 +23,38 @@ documentation. At the root of your repository, create a new GitHub Actions
 workflow, e.g. `.github/workflows/ci.yml`, and copy and paste the following
 contents:
 
-=== "Material for MkDocs"
+``` yaml
+name: ci # (1)
+on:
+  push:
+    branches: # (2)
+      - master
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - run: pip install mkdocs-material # (3)
+      - run: mkdocs gh-deploy --force
+```
 
-    ``` yaml
-    name: ci # (1)
-    on:
-      push:
-        branches: # (2)
-          - master
-          - main
-    jobs:
-      deploy:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - uses: actions/setup-python@v2
-            with:
-              python-version: 3.x
-          - run: pip install mkdocs-material # (3)
-          - run: mkdocs gh-deploy --force
-    ```
+1. You can change the name to your liking.
 
-    1. You can change the name to your liking.
+2. At some point, GitHub renamed `master` to `main`. If your default branch
+   is named `master`, you can safely remove `main`, vice versa.
 
-    2. At some point, GitHub renamed `master` to `main`. If your default branch
-       is named `master`, you can safely remove `main`, vice versa.
+3. This is the place to install further [MkDocs plugins][3] or Markdown
+   extensions with `pip` to be used during the build:
 
-    3. This is the place to install further [MkDocs plugins][3] or Markdown
-       extensions with `pip` to be used during the build:
-
-        ``` sh
-        pip install \
-          mkdocs-material \
-          mkdocs-awesome-pages-plugin \
-          ...
-        ```
-
-=== "Insiders"
-
-    ``` yaml
-    name: ci
-    on:
-      push:
-        branches:
-          - master
-          - main
-    jobs:
-      deploy:
-        runs-on: ubuntu-latest
-        if: github.event.repository.fork == false
-        steps:
-          - uses: actions/checkout@v2
-          - uses: actions/setup-python@v2
-            with:
-              python-version: 3.x
-          - run: pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
-          - run: mkdocs gh-deploy --force
-    env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    ``` sh
+    pip install \
+      mkdocs-material \
+      mkdocs-awesome-pages-plugin \
+      ...
     ```
 
 Now, when a new commit is pushed to either the `master` or `main` branches,
@@ -96,7 +70,6 @@ using [secrets][6]._
   [2]: https://github.com/features/actions
   [3]: https://github.com/mkdocs/mkdocs/wiki/MkDocs-Plugins
   [4]: https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
-  [5]: insiders/index.md
   [6]: https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
 
 ### with MkDocs
@@ -115,37 +88,19 @@ done by using the [GitLab CI][8] task runner. At the root of your repository,
 create a task definition named `.gitlab-ci.yml` and copy and paste the
 following contents:
 
-=== "Material for MkDocs"
-
-    ``` yaml
-    image: python:latest
-    pages:
-      stage: deploy
-      only:
-        - master
-      script:
-        - pip install mkdocs-material
-        - mkdocs build --site-dir public
-      artifacts:
-        paths:
-          - public
-    ```
-
-=== "Insiders"
-
-    ``` yaml
-    image: python:latest
-    pages:
-      stage: deploy
-      only:
-        - master
-      script:
-        - pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
-        - mkdocs build --site-dir public
-      artifacts:
-        paths:
-          - public
-    ```
+``` yaml
+image: python:latest
+pages:
+  stage: deploy
+  only:
+    - master
+  script:
+    - pip install mkdocs-material
+    - mkdocs build --site-dir public
+  artifacts:
+    paths:
+      - public
+```
 
 Now, when a new commit is pushed to `master`, the static site is automatically
 built and deployed. Commit and push the file to your repository to see the
